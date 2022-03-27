@@ -12,11 +12,11 @@ const main = async () => {
         .option('s', {
             alias: 'source',
             required: true,
-            description: 'source directory containing markdown files',
+            description: 'source directory containing your Obsidian Vault',
         })
         .option('o', {
             alias: 'output',
-            required: true,
+            default: 'output',
             description: 'output directory for generated files',
         })
         .option('t', {
