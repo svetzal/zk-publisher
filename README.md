@@ -31,6 +31,13 @@ zk-publisher -s [Path To My Vault]
 On MacOS, by default a vault you create called `Main` will likely be found someplace
 like `$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main`.
 
+If you do not specify an output directory with the `-o` option, a directory will be created called `output` in your
+current directory.
+
+A temporary directory is required to hold an intermediate conversion of your Vault into plain markdown (done
+via `obsidian-export`). If you do not specify a location for it, it will be created in your current directory.
+Currently, the tool does not delete this temporary directory.
+
 ## Runtime Requirements
 
 You must have the following tools on your path:
