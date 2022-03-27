@@ -3,6 +3,20 @@
 This project is in the initial stages, working towards a simple command-line mechanism that will publish an Obsidian
 Vault to a reasonable content website.
 
+This is a necessarily complicated problem to solve.
+
+Some overall goals of the project:
+
+- support Evergreen notes as a source content style, for publishing emergent learning and content, as
+  per [Andy Matuschak's definition of Evergreen Notes](https://notes.andymatuschak.org/Evergreen_note-writing_as_fundamental_unit_of_knowledge_work)
+- support a means of structurally navigating content according to metadata (eg tags)
+- support naturally navigating content from regular wiki-style links in your vault, eg supporting Maps of Content style
+  navigation
+- provide a mechanism to publish rich content based on metadata
+    - with an extensible mechanism for content transformation that can support casual consumers of the emergent
+      artifacts
+
+
 ## Current State
 
 Uses EJS as a template engine for markdown pages converted to HTML. Currently the default template is not configurable,

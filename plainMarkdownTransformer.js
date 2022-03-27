@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs').promises;
-const {markdown} = require('markdown');
+const markdown = require('markdown-it')({
+    html: true
+});
 const frontMatter = require('front-matter');
 const ejs = require('ejs');
 const changeFileExtensionTo = require("./changeFileExtensionTo");
@@ -17,7 +19,7 @@ async function plainMarkdownTransformer(filePath, source, output) {
     if (!canProcess(contents)) return;
 
     const tpl = (await fs.readFile('defaultHtmlTemplate.ejs')).toString();
-    const html = markdown.toHTML(contents.body);
+    const html = markdown.render(contents.body);
     let newFilePath = changeFileExtensionTo(filePath, "html");
     let outputFilePath = path.join(output, newFilePath);
     await fs.mkdir(path.dirname(outputFilePath), {recursive: true});
