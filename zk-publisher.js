@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const prepareOutputDirectory = require('./prepareOutputDirectory');
-const plainMarkdownTransformer = require('./plainMarkdownTransformer');
-const powerpointTransformer = require("./powerpointTransformer");
-const runContentTransformers = require('./run-content-transformers');
-const exportVaultToMarkdown = require("./exportVaultToMarkdown");
+const prepareOutputDirectory = require('./pathManipulation/prepareOutputDirectory');
+const plainMarkdownTransformer = require('./transformation/plainMarkdownTransformer');
+const powerpointTransformer = require("./transformation/powerpointTransformer");
+const runContentTransformers = require('./transformation/runContentTransformers');
+const exportVaultToMarkdown = require("./transformation/exportVaultToMarkdown");
 const path = require("path");
 
 const main = async () => {

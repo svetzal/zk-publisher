@@ -3,11 +3,10 @@ const fs = require('fs').promises;
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const frontMatter = require('front-matter');
-const changeFileExtensionTo = require("./changeFileExtensionTo");
+const changeFileExtensionTo = require("../pathManipulation/changeFileExtensionTo");
 
 function canProcess(contents) {
-    if (("type" in contents.attributes) && contents.attributes.type === 'presentation') return true;
-    return false;
+    return ("type" in contents.attributes) && contents.attributes.type === 'presentation';
 }
 
 async function powerpointTransformer(filePath, source, output) {

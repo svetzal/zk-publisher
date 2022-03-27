@@ -1,5 +1,5 @@
-const filePathsIn = require('./filePathsIn');
-const makeRelativeTo = require('./makeRelativeTo');
+const filePathsIn = require('../pathManipulation/filePathsIn');
+const makeRelativeTo = require('../pathManipulation/makeRelativeTo');
 
 async function runContentTransformers(source, output, transformers) {
     for await (const filePath of filePathsIn(source)) {

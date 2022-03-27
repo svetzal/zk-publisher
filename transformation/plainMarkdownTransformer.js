@@ -5,11 +5,10 @@ const markdown = require('markdown-it')({
 });
 const frontMatter = require('front-matter');
 const ejs = require('ejs');
-const changeFileExtensionTo = require("./changeFileExtensionTo");
+const changeFileExtensionTo = require("../pathManipulation/changeFileExtensionTo");
 
 function canProcess(contents) {
-    if (!("type" in contents.attributes)) return true;
-    return false;
+    return !("type" in contents.attributes);
 }
 
 async function plainMarkdownTransformer(filePath, source, output) {
