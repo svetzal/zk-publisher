@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
+const path = require("path");
+
 const prepareOutputDirectory = require('./pathManipulation/prepareOutputDirectory');
 const plainMarkdownTransformer = require('./transformation/plainMarkdownTransformer');
 const powerpointTransformer = require("./transformation/powerpointTransformer");
 const runContentTransformers = require('./transformation/runContentTransformers');
 const exportVaultToMarkdown = require("./transformation/exportVaultToMarkdown");
-const path = require("path");
 
 const main = async () => {
     const args = require('yargs')
