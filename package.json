@@ -1,0 +1,31 @@
+{
+  "name": "zk-publisher",
+  "version": "1.0.0",
+  "description": "Publish a markdown site exported from Obsidian using obsidian-export.",
+  "main": "zk-publisher.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "zk-publisher": "zk-publisher.js"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Stacey Vetzal",
+    "email": "stacey@vetzal.com",
+    "url": "https://stacey.vetzal.com/"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^17.4.0",
+    "front-matter": "^4.0.2",
+    "markdown": "^0.5.0",
+    "ejs": "^3.1.6"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^9.2.2",
+    "nyc": "^15.1.0",
+    "sinon": "^13.0.1"
+  }
+}
