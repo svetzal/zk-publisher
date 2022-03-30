@@ -1,10 +1,15 @@
 const path = require('path');
 const fs = require('fs').promises;
-const markdown = require('markdown-it')({
-    html: true
-});
+
 const frontMatter = require('front-matter');
 const ejs = require('ejs');
+const markdown = require('markdown-it')({
+    html: true,
+    replaceLink: function (link, env) {
+        return link.replace(/\.md$/, ".html");
+    }
+}).use(require('markdown-it-replace-link'));
+
 const changeFileExtensionTo = require("../pathManipulation/changeFileExtensionTo");
 
 function canProcess(contents) {
