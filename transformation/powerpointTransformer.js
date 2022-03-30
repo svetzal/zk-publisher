@@ -16,8 +16,9 @@ async function powerpointTransformer(filePath, source, output) {
     if (!canProcess(contents)) return;
 
     const infile = path.join(source, filePath);
-    const outfile = path.join(output, changeFileExtensionTo(filePath, "pptx"));
-    await exec(`pandoc "${infile}" -o "${outfile}"`);
+    const innerpath = path.dirname(filePath);
+    const outfile = path.join(path.resolve(output), innerpath, changeFileExtensionTo(path.basename(filePath), "pptx"));
+    await exec(`cd ${path.dirname(infile)} && pandoc "${path.basename(infile)}" -o "${outfile}"`);
 }
 
 module.exports = powerpointTransformer;

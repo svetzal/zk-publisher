@@ -6,7 +6,7 @@ const ejs = require('ejs');
 const markdown = require('markdown-it')({
     html: true,
     replaceLink: function (link, env) {
-        return link.replace(/\.md$/, ".html");
+        return link.replace(/\.md$/, ".html"); // TODO: Ideally, we should determine the real extension used by the transformer that processed? will process? the target
     }
 }).use(require('markdown-it-replace-link'));
 
