@@ -3,10 +3,10 @@
 const path = require("path");
 
 const prepareOutputDirectory = require('./pathManipulation/prepareOutputDirectory');
-const plainMarkdownTransformer = require('./transformation/plainMarkdownTransformer');
-const powerpointTransformer = require("./transformation/powerpointTransformer");
 const runContentTransformers = require('./transformation/runContentTransformers');
 const exportVaultToMarkdown = require("./transformation/exportVaultToMarkdown");
+const PlainMarkdownTransformer = require("./transformation/plainMarkdownTransformer");
+const PowerpointTransformer = require("./transformation/powerpointTransformer");
 
 const main = async () => {
     const args = require('yargs')
@@ -28,8 +28,8 @@ const main = async () => {
         .help().argv;
 
     const transformers = [
-        plainMarkdownTransformer,
-        powerpointTransformer,
+        new PlainMarkdownTransformer(),
+        new PowerpointTransformer(),
     ];
 
     await prepareOutputDirectory(args.output);

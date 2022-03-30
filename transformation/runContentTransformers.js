@@ -5,8 +5,8 @@ async function runContentTransformers(source, output, transformers) {
     let contentMap = {};
     for await (const filePath of filePathsIn(source)) {
         let relativePath = makeRelativeTo(filePath, source);
-        for (const transform of transformers) {
-            await transform(relativePath, source, output);
+        for (const transformer of transformers) {
+            await transformer.process(relativePath, source, output);
         }
         contentMap[relativePath] = {};
     }
