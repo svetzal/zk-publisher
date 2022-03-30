@@ -1,7 +1,6 @@
 const path = require('path');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
-const changeFileExtensionTo = require("../pathManipulation/changeFileExtensionTo");
 const prepareOutputDirectory = require("../pathManipulation/prepareOutputDirectory");
 
 const Transformer = require("./transformer");
@@ -12,13 +11,13 @@ class PowerpointTransformer extends Transformer {
     }
 
     async transform(filePath, source, output) {
-        const templateFile = path.resolve('defaultPptxTemplate.pptx');
+        const fullTemplatePathname = this.getFullTemplatePathname();
+        const pathToInfile = path.join(source, filePath);
 
-        const infile = path.join(source, filePath);
-        const innerPath = path.dirname(filePath);
-        const outfile = path.join(path.resolve(output), innerPath, changeFileExtensionTo(path.basename(filePath), "pptx"));
-        await prepareOutputDirectory(path.join(path.resolve(output), innerPath));
-        await exec(`cd ${path.dirname(infile)} && pandoc "${path.basename(infile)}" --reference-doc ${templateFile} -o "${outfile}"`);
+        let newFilePath = this.getNewFilepath(filePath, output, "pptx");
+        await prepareOutputDirectory(path.dirname(newFilePath));
+
+        await exec(`cd ${path.dirname(pathToInfile)} && pandoc "${path.basename(pathToInfile)}" --reference-doc ${fullTemplatePathname} -o "${newFilePath}"`);
     }
 }
 

@@ -1,8 +1,13 @@
 const path = require('path');
 const fs = require('fs').promises;
 const frontMatter = require('front-matter');
+const changeFileExtensionTo = require("../pathManipulation/changeFileExtensionTo");
 
 class Transformer {
+    constructor(templateFilename) {
+        this.templateFilename = templateFilename;
+    }
+
     canProcess(contents) {
         return typeof(contents) !== "undefined";
     }
@@ -16,6 +21,20 @@ class Transformer {
     }
 
     async transform(filePath, source, output) {
+    }
+
+    getFullTemplatePathname() {
+        return path.resolve(this.templateFilename);
+    }
+
+    async readFileToString(fullTemplatePathname) {
+        return (await fs.readFile(fullTemplatePathname)).toString();
+    }
+
+    getNewFilepath(filePath, output, newExtension) {
+        const innerPathToInfile = path.dirname(filePath);
+        let newFilename = changeFileExtensionTo(path.basename(filePath), newExtension);
+        return path.join(path.resolve(output), innerPathToInfile, newFilename);
     }
 }
 

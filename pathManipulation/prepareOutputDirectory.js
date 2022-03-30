@@ -8,7 +8,7 @@ async function prepareOutputDirectory(output) {
         }
     } catch (err) {
         if (err.code === "ENOENT") { // Not found
-            await fs.mkdir(output);
+            await fs.mkdir(output, {recursive: true});
             return;
         }
         throw err;

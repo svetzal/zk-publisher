@@ -11,7 +11,7 @@ const markdown = require('markdown-it')({
 
 const Transformer = require("./transformer");
 
-const changeFileExtensionTo = require("../pathManipulation/changeFileExtensionTo");
+const prepareOutputDirectory = require("../pathManipulation/prepareOutputDirectory");
 
 class PlainMarkdownTransformer extends Transformer {
     canProcess(contents) {
@@ -19,12 +19,14 @@ class PlainMarkdownTransformer extends Transformer {
     }
 
     async transform(filePath, source, output) {
-        const tpl = (await fs.readFile('defaultHtmlTemplate.ejs')).toString();
+        const fullTemplatePathname = this.getFullTemplatePathname();
+        const template = await this.readFileToString(fullTemplatePathname);
         const html = markdown.render(this.contents.body);
-        let newFilePath = changeFileExtensionTo(filePath, "html");
-        let outputFilePath = path.join(output, newFilePath);
-        await fs.mkdir(path.dirname(outputFilePath), {recursive: true});
-        await fs.writeFile(outputFilePath, ejs.render(tpl, {metadata: this.contents.attributes, content: html}));
+
+        let newFilePath = this.getNewFilepath(filePath, output, "pptx");
+        await prepareOutputDirectory(path.dirname(newFilePath));
+
+        await fs.writeFile(newFilePath, ejs.render(template, {metadata: this.contents.attributes, content: html}));
     }
 }
 

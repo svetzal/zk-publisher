@@ -25,11 +25,19 @@ const main = async () => {
             description: 'directory to use for temporary files',
             default: 'temp',
         })
+        .option('htmlTemplate', {
+            description: 'default HTML template, in EJS format',
+            default: 'defaultHtmlTemplate.ejs'
+        })
+        .option('pptxTemplate', {
+            description: 'default Powerpoint template, pptx or potx',
+            default: 'defaultPptxTemplate.pptx'
+        })
         .help().argv;
 
     const transformers = [
-        new PlainMarkdownTransformer(),
-        new PowerpointTransformer(),
+        new PlainMarkdownTransformer(args.htmlTemplate),
+        new PowerpointTransformer(args.pptxTemplate),
     ];
 
     await prepareOutputDirectory(args.output);
