@@ -7,6 +7,7 @@ const runContentTransformers = require('./transformation/runContentTransformers'
 const exportVaultToMarkdown = require("./transformation/exportVaultToMarkdown");
 const PlainMarkdownTransformer = require("./transformation/plainMarkdownTransformer");
 const PowerpointTransformer = require("./transformation/powerpointTransformer");
+const WordTransformer = require("./transformation/wordTransformer");
 
 const main = async () => {
     const args = require('yargs')
@@ -38,6 +39,7 @@ const main = async () => {
     const transformers = [
         new PlainMarkdownTransformer(args.htmlTemplate),
         new PowerpointTransformer(args.pptxTemplate),
+        new WordTransformer(),
     ];
 
     await prepareOutputDirectory(args.output);

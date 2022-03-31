@@ -7,7 +7,7 @@ const Transformer = require("./transformer");
 
 class PowerpointTransformer extends Transformer {
     canProcess(contents) {
-        return ("type" in contents.attributes) && contents.attributes.type === 'presentation';
+        return this.typeAttributeSetTo(contents, 'presentation');
     }
 
     async transform(filePath, source, output) {

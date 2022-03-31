@@ -4,7 +4,7 @@ const frontMatter = require('front-matter');
 const changeFileExtensionTo = require("../pathManipulation/changeFileExtensionTo");
 
 class Transformer {
-    constructor(templateFilename) {
+    constructor(templateFilename = null) {
         this.templateFilename = templateFilename;
     }
 
@@ -35,6 +35,10 @@ class Transformer {
         const innerPathToInfile = path.dirname(filePath);
         let newFilename = changeFileExtensionTo(path.basename(filePath), newExtension);
         return path.join(path.resolve(output), innerPathToInfile, newFilename);
+    }
+
+    typeAttributeSetTo(contents, typeValue) {
+        return ("type" in contents.attributes) && contents.attributes.type === typeValue;
     }
 }
 
