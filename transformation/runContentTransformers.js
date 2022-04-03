@@ -1,36 +1,13 @@
 const filePathsIn = require('../pathManipulation/filePathsIn');
 const makeRelativeTo = require('../pathManipulation/makeRelativeTo');
 
-async function runContentTransformers(source, output, transformers) {
-    let contentMap = {};
+async function runContentTransformers(siteMap, source, output, transformers) {
     for await (const filePath of filePathsIn(source)) {
         let relativePath = makeRelativeTo(filePath, source);
         for (const transformer of transformers) {
             await transformer.process(relativePath, source, output);
         }
-        contentMap[relativePath] = {};
     }
 }
 
 module.exports = runContentTransformers;
-
-/*
-
-1. Catalog files & plan transformations
-
-    contentMap {
-        "sourcePath": {
-            transformations: [
-                function: () => {},
-                target: "path",
-                type: "",
-                tags: ["abc", "def"]
-            ]
-        }
-    }
-
-2. Transform files
-    a. rewrite links in markdowns to target types
-        https://www.npmjs.com/package/markdown-it-replace-link
-
- */

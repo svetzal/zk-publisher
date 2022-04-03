@@ -5,9 +5,12 @@ const path = require("path");
 const prepareOutputDirectory = require('./pathManipulation/prepareOutputDirectory');
 const runContentTransformers = require('./transformation/runContentTransformers');
 const exportVaultToMarkdown = require("./transformation/exportVaultToMarkdown");
-const PlainMarkdownTransformer = require("./transformation/plainMarkdownTransformer");
-const PowerpointTransformer = require("./transformation/powerpointTransformer");
-const WordTransformer = require("./transformation/wordTransformer");
+const PlainMarkdownTransformer = require("./transformation/PlainMarkdownTransformer");
+const PowerpointTransformer = require("./transformation/PowerpointTransformer");
+const WordTransformer = require("./transformation/WordTransformer");
+const SiteMap = require("./transformation/SiteMap");
+const buildSiteMap = require("./build-content-map");
+const prepareSiteMap = require("./transformation/prepareSiteMap");
 
 const main = async () => {
     const args = require('yargs')
@@ -36,8 +39,9 @@ const main = async () => {
         })
         .help().argv;
 
+    let siteMap = new SiteMap();
     const transformers = [
-        new PlainMarkdownTransformer(args.htmlTemplate),
+        new PlainMarkdownTransformer(args.htmlTemplate, siteMap),
         new PowerpointTransformer(args.pptxTemplate),
         new WordTransformer(),
     ];
@@ -45,7 +49,9 @@ const main = async () => {
     await prepareOutputDirectory(args.output);
     await prepareOutputDirectory(args.temp);
     await exportVaultToMarkdown(args.source, args.temp);
-    await runContentTransformers(path.resolve(args.temp), args.output, transformers);
+    await buildSiteMap(siteMap, path.resolve(args.temp), args.output, transformers);
+    await prepareSiteMap(siteMap, path.resolve(args.temp), args.output, transformers);
+    await runContentTransformers(siteMap, path.resolve(args.temp), args.output, transformers);
 };
 
 main();
