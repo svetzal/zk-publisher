@@ -36,22 +36,25 @@ class PlainMarkdownTransformer extends Transformer {
             {
                 html: true,
                 replaceLink: function (link) {
-                    let target = transformer.siteMap.getMetadataFor(decodeURI(link));
+                    if (link.match(/^(https?|mailto):\/\//)) return link;
+
+                    const decodedLink = decodeURIComponent(link);
+                    const decodedPath = path.join(path.dirname(filePath), decodedLink);
+                    const target = transformer.siteMap.getMetadataFor(decodedPath);
+
+                    let foundTarget;
                     if (!target) {
-                        // All of this is so, so wrong; is this still even a valid contingency?
-                        let dirname = path.dirname(filePath);
-                        let prefix = '';
-                        if (dirname && dirname !== '.') {
-                            prefix = dirname.replace(/^\.\//, '');
-                        }
-                        let fullerPath = prefix? prefix + path.sep + link : link;
-                        target = transformer.siteMap.getMetadataFor(decodeURI(fullerPath));
-                    }
-                    if (!target) {
-                        return link.replace(/\.md$/, ".html"); // if not mapped, assume html
+                        // If the target isn't mapped, just use the link as provided
+                        foundTarget = decodedLink;
                     } else {
-                        return target[0].target;
+                        // Figure out the relative path between the current document and the linked target
+                        const targetPath = target[0].target;
+                        const p1 = path.resolve(path.join(output, path.dirname(filePath)));
+                        const p2 = path.resolve(path.join(output, path.dirname(targetPath)));
+                        foundTarget = path.join(path.relative(p1, p2), path.basename(targetPath));
                     }
+
+                    return encodeURI(foundTarget);
                 }
             }
         ).use(markdownReplaceLink)

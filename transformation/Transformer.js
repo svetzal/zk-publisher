@@ -31,7 +31,7 @@ class Transformer {
     }
 
     async getMetadata(filePath, source) {
-        if (await this.canProcess(filePath, source))
+        if (await this.canProcess(filePath, source)) {
             return {
                 target: this.calculateNewFileRelativePath(filePath, this.getNewExtension()),
                 /*
@@ -39,7 +39,7 @@ class Transformer {
                     tags: ["abc", "def"]
                  */
             }
-        else
+        } else
             return null;
     }
 
