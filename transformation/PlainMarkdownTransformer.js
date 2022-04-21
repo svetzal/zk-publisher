@@ -61,7 +61,7 @@ class PlainMarkdownTransformer extends Transformer {
 
         const html = mdp.render(contents.body);
 
-        await fs.writeFile(newFilePath, ejs.render(template, {metadata: contents.attributes, content: html}));
+        await fs.writeFile(newFilePath, ejs.render(template, {metadata: contents.attributes, content: html, title: path.basename(filePath)}));
     }
 }
 
