@@ -7,9 +7,8 @@ async function* filePathsIn(dir) {
         const filePath = path.resolve(dir, item.name);
         if (item.isDirectory()) {
             yield* filePathsIn(filePath);
-        } else if (filePath.endsWith(".md")) {
+        } else
             yield filePath;
-        }
     }
 }
 

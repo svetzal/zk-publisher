@@ -8,6 +8,7 @@ const exportVaultToMarkdown = require("./transformation/exportVaultToMarkdown");
 const PlainMarkdownTransformer = require("./transformation/PlainMarkdownTransformer");
 const PowerpointTransformer = require("./transformation/PowerpointTransformer");
 const WordTransformer = require("./transformation/WordTransformer");
+const CopyTransformer = require("./transformation/CopyTransformer");
 const SiteMap = require("./transformation/SiteMap");
 const buildSiteMap = require("./build-content-map");
 const prepareSiteMap = require("./transformation/prepareSiteMap");
@@ -44,6 +45,7 @@ const main = async () => {
         new PlainMarkdownTransformer(args.htmlTemplate, siteMap),
         new PowerpointTransformer(args.pptxTemplate),
         new WordTransformer(),
+        new CopyTransformer()
     ];
 
     await prepareOutputDirectory(args.output);

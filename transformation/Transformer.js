@@ -18,7 +18,7 @@ class Transformer {
     }
 
     async canProcess(filePath, source) {
-        return this.canProcessWithContents(await this.getContents(filePath, source));
+        return filePath.endsWith(".md") && this.canProcessWithContents(await this.getContents(filePath, source));
     }
 
     async process(filePath, source, output) {
