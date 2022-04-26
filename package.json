@@ -1,6 +1,6 @@
 {
   "name": "zk-publisher",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Publish a markdown site exported from Obsidian using obsidian-export.",
   "main": "zk-publisher.js",
   "scripts": {
